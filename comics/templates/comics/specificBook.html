@@ -70,47 +70,31 @@
     </div>
   </nav>
 
+<main class="relative">
+  <!-- Full-width Poster -->
+  <section class="w-full h-70 md:h-[20rem] bg-cover bg-center" style="background-image: url('{{ book.poster_url }}');">
+    <div class="bg-black bg-opacity-40 w-full h-full flex items-center justify-center">
+      <h1 class="text-4xl md:text-5xl text-white font-bold drop-shadow-lg">{{ book.title }}</h1>
+    </div>
+  </section>
 
-  <!-- Main Content -->
-  <main class="container mx-auto px-6 py-10 space-y-16">
-
-    <!-- Genre Section Template -->
-    {% for genre in genres %}
-    <section class="bg-white shadow-lg rounded-xl p-6 relative">
-      <!-- Genre Title and Image -->
-      <div class="flex items-center justify-between mb-6">
-        <div class="flex items-center space-x-4">
-          <h2 class="text-2xl font-semibold border-l-4 border-red-600 pl-4">{{ genre }}</h2>
-        </div>
-        <a href="#"
-          class="text-green-600 border border-green-500 rounded-xl px-4 py-1 text-sm hover:bg-green-50 transition-all duration-300">Explore
-          Genre</a>
-      </div>
-
-      <!-- Books Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        {% for book in books %}
-        <div
-          class="bg-white border border-red-200 rounded-lg shadow-lg transform transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-red-400/40">
-          <div class="h-48 bg-red-100 flex items-center justify-center text-red-400">
-            Book Image
-          </div>
-          <div class="p-4 space-y-2">
-            <h3 class="text-lg font-bold text-red-600">{{book.title}}</h3>
-            <p class="text-sm text-gray-600">Some description about the manga book that excites users.</p>
-            <a href="{% url 'bookpage' book.title%}">
-              <button
-                class="mt-2 inline-block bg-green-500 text-white text-sm px-4 py-1 rounded-lg hover:bg-green-600 transition">Read</button> 
-            </a>
-            
-          </div>
+  <!-- Overlapping Episode Box -->
+  <section class="relative z-10 max-w-4xl mx-auto -mt-16 px-4">
+    <div class="bg-white border border-red-200 rounded-2xl shadow-lg p-6">
+      <h2 class="text-2xl font-semibold text-red-600 mb-4">Episodes</h2>
+      <div class="space-y-4">
+        {% for episode in episodes %}
+        <div class="flex justify-between items-center bg-red-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
+          <div class="text-lg font-medium text-gray-800">Episode {{ episode.number }}</div>
+          <div class="text-sm text-gray-600">{{ episode.release_date }}</div>
         </div>
         {% endfor %}
       </div>
-    </section>
-    {% endfor %}
+    </div>
+  </section>
+</main>
 
-  </main>
+
   <!-- Footer -->
   <footer class="bg-red-600 text-white py-6 mt-10">
   <div class="text-center text-sm py-4 bg-red-700">

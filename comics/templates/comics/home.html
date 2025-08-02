@@ -75,14 +75,14 @@
   <main class="container mx-auto px-6 py-10 space-y-16">
 
     <!-- Genre Section Template -->
-    {% for genre in genres %}
+    {% for genre,books in genres_books %}
     <section class="bg-white shadow-lg rounded-xl p-6 relative">
       <!-- Genre Title and Image -->
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center space-x-4">
           <h2 class="text-2xl font-semibold border-l-4 border-red-600 pl-4">{{ genre }}</h2>
         </div>
-        <a href="#"
+        <a href="{% url 'spcifiGenrepage' genre %}"
           class="text-green-600 border border-green-500 rounded-xl px-4 py-1 text-sm hover:bg-green-50 transition-all duration-300">Explore
           Genre</a>
       </div>
@@ -93,12 +93,17 @@
         <div
           class="bg-white border border-red-200 rounded-lg shadow-lg transform transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-red-400/40">
           <div class="h-48 bg-red-100 flex items-center justify-center text-red-400">
-            Book Image
+            {% if book.image %}
+                <img src="{{ book.image.url }}" alt="{{ book.cname }}"class="w-full h-full object-cover rounded-lg">
+              {% else %}
+                <p>No image uploaded.</p>
+              {% endif %}
+            
           </div>
           <div class="p-4 space-y-2">
-            <h3 class="text-lg font-bold text-red-600">{{book.title}}</h3>
+            <h3 class="text-lg font-bold text-red-600">{{book.cname}}</h3>
             <p class="text-sm text-gray-600">Some description about the manga book that excites users.</p>
-            <a href="{% url 'bookpage' book.title%}">
+            <a href="{% url 'bookpage' book.cname %}">
               <button
                 class="mt-2 inline-block bg-green-500 text-white text-sm px-4 py-1 rounded-lg hover:bg-green-600 transition">Read</button> 
             </a>

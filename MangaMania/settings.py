@@ -15,9 +15,8 @@ import os
 
 BASE_DIR = '/Users/ansariaasif/Desktop/MangaMania /MangaMania'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'your_app/static'),
-]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

@@ -6,5 +6,7 @@ urlpatterns = [
     path('',views.home,name='homepage'),
     path('genre/',views.genre,name='genrapage'),
     path('about/',views.about,name='aboutpage'),
-    path('book/<str:name>/',views.book,name='bookpage'),
+    path('book/<str:name>',views.book,name='bookpage'),
+    path('specificGenre/<str:GenreName>',views.specificGenre,name='spcifiGenrepage')
 ]
+
