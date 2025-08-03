@@ -56,9 +56,19 @@
       <div class="flex items-center space-x-6">
         <!-- Navigation Links -->
         <div class="hidden md:flex space-x-6">
-          <a href="{% url 'homepage' %}" class="nav-link text-white hover:text-white">Home</a>
-          <a href="{% url 'genrapage' %}" class="nav-link text-white hover:text-white">Genres</a>
-          <a href="{% url 'aboutpage' %}" class="nav-link text-white hover:text-white">About</a>
+          <a href="{% url 'homepage' %}"
+            class="nav-link text-white hover:text-white {% if active_page == 'home' %}font-bold  text-yellow-300{% endif %}">
+            Home
+          </a>
+          <a href="{% url 'genrapage' %}"
+            class="nav-link text-white hover:text-white {% if active_page == 'genres' %}font-bold underline text-yellow-300{% endif %}">
+            Genres
+          </a>
+          <a href="{% url 'aboutpage' %}"
+            class="nav-link text-white hover:text-white {% if active_page == 'about' %}font-bold underline text-yellow-300{% endif %}">
+            About
+          </a>
+
         </div>
 
         <!-- Hollow Login Button -->

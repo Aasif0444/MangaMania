@@ -12,7 +12,8 @@ def home(request):
         genre_books.append((genre, books))  # List of tuples
 
     context = {
-        'genres_books': genre_books
+        'genres_books': genre_books,
+        'active_page' :'home'
     }
     return render(request, 'comics/home.html', context)
 
@@ -20,11 +21,9 @@ def genre(response):
       genres = ComicGenre.objects.all()
       books = ComicDetails.objects.all()
 
-
       config = {'genres': genres,'books':books}
 
       return render(response, 'comics/genre.html',config )
-
 
 
 def about(response):     
