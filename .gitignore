@@ -12,8 +12,6 @@ __pycache__/
 db.sqlite3
 
 # Static and media
-/media/
-staticfiles/
 
 # Local env
 .env
