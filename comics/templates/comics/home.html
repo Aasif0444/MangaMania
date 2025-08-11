@@ -40,99 +40,126 @@
         transform: translateY(0);
       }
     }
+
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .animate-scroll {
+      animation: scroll 30s linear infinite;
+    }
+
+    .animate-scroll:hover {
+      animation-play-state: paused;
+    }
   </style>
 </head>
 
 <body class="bg-white text-gray-800 font-sans">
 
+  <!-- Navbar -->
   <nav class="bg-red-600 shadow-md fade-slide">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <!-- Logo -->
       <div class="flex items-center space-x-3">
         <img src="{% static 'comics/images/logo.png' %}" alt="Logo" class="h-16 w-auto rounded-lg" />
       </div>
-
-      <!-- Links and Login -->
       <div class="flex items-center space-x-6">
-        <!-- Navigation Links -->
         <div class="hidden md:flex space-x-6">
-          <a href="{% url 'homepage' %}"
-            class="nav-link text-white hover:text-white {% if active_page == 'home' %}font-bold  text-yellow-300{% endif %}">
-            Home
-          </a>
-          <a href="{% url 'genrapage' %}"
-            class="nav-link text-white hover:text-white {% if active_page == 'genres' %}font-bold underline text-yellow-300{% endif %}">
-            Genres
-          </a>
-          <a href="{% url 'aboutpage' %}"
-            class="nav-link text-white hover:text-white {% if active_page == 'about' %}font-bold underline text-yellow-300{% endif %}">
-            About
-          </a>
-
+          <a href="{% url 'homepage' %}" class="nav-link text-white hover:text-white {% if active_page == 'home' %}font-bold  text-yellow-300{% endif %}">Home</a>
+          <a href="{% url 'genrapage' %}" class="nav-link text-white hover:text-white {% if active_page == 'genres' %}font-bold underline text-yellow-300{% endif %}">Genres</a>
+          <a href="{% url 'aboutpage' %}" class="nav-link text-white hover:text-white {% if active_page == 'about' %}font-bold underline text-yellow-300{% endif %}">About</a>
         </div>
-
-        <!-- Hollow Login Button -->
-        <a href="{% url 'loginPage'%}"
-          class="text-white border border-white px-4 py-2 rounded-lg font-medium hover:bg-white hover:text-red-600 transition duration-300">
-          Login
-        </a>
+        <a href="{% url 'loginPage'%}" class="text-white border border-white px-4 py-2 rounded-lg font-medium hover:bg-white hover:text-red-600 transition duration-300">Login</a>
       </div>
     </div>
   </nav>
 
+<!-- Trending Section -->
+<section class="px-4 md:px-20 lg:px-40 py-10 fade-slide">
+  <div class="bg-white shadow-lg rounded-xl p-6 relative">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-semibold border-l-4 border-yellow-500 pl-4 text-yellow-600">Trending & Popular Series</h2>
+    </div>
+
+    <!-- Grid layout: 1 on small, 4 on medium, 5 on large -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      {% for book in trending_books %}
+      <div class="bg-white border border-yellow-300 rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-yellow-400/40 relative">
+        <div class="h-64 bg-yellow-100 relative overflow-hidden rounded-t-lg">
+          {% if book.image %}
+          <img src="{{ book.image.url }}" alt="{{ book.cname }}" class="w-full h-full object-cover">
+          {% else %}
+          <div class="h-full flex items-center justify-center text-yellow-500">No Image</div>
+          {% endif %}
+
+            <!-- Trending number -->
+            <div class="absolute bottom-4 left-4 bg-yellow-600 text-white text-4xl font-extrabold px-5 py-3 rounded-full shadow-2xl border-4 ">
+              {{ forloop.counter }}
+            </div>
+
+
+
+        </div>
+        <div class="p-3 space-y-1">
+          <h3 class="text-lg font-bold text-yellow-700">{{ book.cname }}</h3>
+          <p class="text-sm text-gray-600">Hot pick from the MangaMania community.</p>
+          <a href="{% url 'bookpage' book.cname %}">
+            <button class="mt-2 inline-block bg-yellow-500 text-white text-sm px-4 py-1 rounded-lg hover:bg-yellow-600 transition">Read</button>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
 
   <!-- Main Content -->
-  <main class="container mx-auto px-6 py-10 space-y-16">
-
-    <!-- Genre Section Template -->
+  <main class="px-4 md:px-20 lg:px-40 py-10 space-y-16">
     {% for genre,books in genres_books %}
     <section class="bg-white shadow-lg rounded-xl p-6 relative">
-      <!-- Genre Title and Image -->
       <div class="flex items-center justify-between mb-6">
-        <div class="flex items-center space-x-4">
-          <h2 class="text-2xl font-semibold border-l-4 border-red-600 pl-4">{{ genre }}</h2>
-        </div>
-        <a href="{% url 'spcifiGenrepage' genre %}"
-          class="text-green-600 border border-green-500 rounded-xl px-4 py-1 text-sm hover:bg-green-50 transition-all duration-300">Explore
-          Genre</a>
+        <h2 class="text-2xl font-semibold border-l-4 border-red-600 pl-4">{{ genre }}</h2>
+        <a href="{% url 'spcifiGenrepage' genre %}" class="text-green-600 border border-green-500 rounded-xl px-4 py-1 text-sm hover:bg-green-50 transition-all duration-300">Explore Genre</a>
       </div>
 
-      <!-- Books Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <!-- Grid: 1 on small, 4 on medium, 5 on large -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
         {% for book in books %}
-        <div
-          class="bg-white border border-red-200 rounded-lg shadow-lg transform transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-red-400/40">
-          <div class="h-48 bg-red-100 flex items-center justify-center text-red-400">
+        <div class="bg-white border border-red-200 rounded-lg shadow-lg transform transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-red-400/40">
+          <div class="h-64 bg-red-100 flex items-center justify-center text-red-400">
             {% if book.image %}
-                <img src="{{ book.image.url }}" alt="{{ book.cname }}"class="w-full h-full object-cover rounded-lg">
-              {% else %}
-                <p>No image uploaded.</p>
-              {% endif %}
-            
+            <img src="{{ book.image.url }}" alt="{{ book.cname }}" class="w-full h-full object-cover rounded-lg">
+            {% else %}
+            <p>No image uploaded.</p>
+            {% endif %}
           </div>
           <div class="p-4 space-y-2">
             <h3 class="text-lg font-bold text-red-600">{{book.cname}}</h3>
             <p class="text-sm text-gray-600">Some description about the manga book that excites users.</p>
             <a href="{% url 'bookpage' book.cname %}">
-              <button
-                class="mt-2 inline-block bg-green-500 text-white text-sm px-4 py-1 rounded-lg hover:bg-green-600 transition">Read</button> 
+              <button class="mt-2 inline-block bg-green-500 text-white text-sm px-4 py-1 rounded-lg hover:bg-green-600 transition">Read</button>
             </a>
-            
           </div>
         </div>
         {% endfor %}
       </div>
     </section>
     {% endfor %}
-
   </main>
+
   <!-- Footer -->
   <footer class="bg-red-600 text-white py-6 mt-10">
-  <div class="text-center text-sm py-4 bg-red-700">
-    &copy; 2025 MangaMania. All rights reserved.
-  </div>
+    <div class="text-center text-sm py-4 bg-red-700">
+      &copy; 2025 MangaMania. All rights reserved.
+    </div>
   </footer>
-
 
 </body>
 

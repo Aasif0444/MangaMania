@@ -14,6 +14,8 @@ class ComicDetails(models.Model):
     totalView = models.IntegerField()
     totalLike = models.IntegerField()
     image = models.ImageField(upload_to='comics/',blank=True,null=True)
+    poster_image = models.ImageField(upload_to='comics_poster/',blank=True,null=True)
+    
 
     gname = models.ForeignKey(ComicGenre,on_delete=models.CASCADE)
 
@@ -21,3 +23,16 @@ class ComicDetails(models.Model):
     def __str__(self):
         return self.cname
 
+
+
+class ComidEpisodes(models.Model):
+    EpisodeNo = models.IntegerField()
+    EpisodeName = models.CharField(max_length=100)
+    pdf = models.FileField(upload_to='comics_chapters/',blank=True,null=True)
+
+    totalEpisode = models.ForeignKey(ComicDetails,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.EpisodeName
+
+    

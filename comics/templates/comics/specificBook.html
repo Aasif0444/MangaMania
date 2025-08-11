@@ -7,61 +7,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MangaMania - {{book_name}}</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .nav-link {
-      position: relative;
-      transition: color 0.3s ease;
-    }
-
-    .nav-link::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background-color: #FFFFFF;
-      transition: width 0.3s ease-in-out;
-    }
-
-    .nav-link:hover::after {
-      width: 100%;
-    }
-
-    .fade-slide {
-      animation: fadeSlide 0.6s ease-out forwards;
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-
-    @keyframes fadeSlide {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
 </head>
 
 <body class="bg-white text-gray-800 font-sans">
 
-  <nav class="bg-red-600 shadow-md fade-slide">
+  <!-- Navigation -->
+  <nav class="bg-red-600 shadow-md">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <!-- Logo -->
       <div class="flex items-center space-x-3">
         <img src="{% static 'comics/images/logo.png' %}" alt="Logo" class="h-16 w-auto rounded-lg" />
       </div>
-
-      <!-- Links and Login -->
       <div class="flex items-center space-x-6">
-        <!-- Navigation Links -->
         <div class="hidden md:flex space-x-6">
-          <a href="{% url 'homepage' %}" class="nav-link text-white hover:text-white">Home</a>
-          <a href="{% url 'genrapage' %}" class="nav-link text-white hover:text-white">Genres</a>
-          <a href="{% url 'aboutpage' %}" class="nav-link text-white hover:text-white">About</a>
+          <a href="{% url 'homepage' %}" class="text-white hover:underline">Home</a>
+          <a href="{% url 'genrapage' %}" class="text-white hover:underline">Genres</a>
+          <a href="{% url 'aboutpage' %}" class="text-white hover:underline">About</a>
         </div>
-
-        <!-- Hollow Login Button -->
         <a href="{% url 'loginPage'%}"
           class="text-white border border-white px-4 py-2 rounded-lg font-medium hover:bg-white hover:text-red-600 transition duration-300">
           Login
@@ -70,39 +31,60 @@
     </div>
   </nav>
 
-<main class="relative">
-  <!-- Full-width Poster -->
-  <section class="w-full h-70 md:h-[20rem] bg-cover bg-center" style="background-image: url('{{ book.poster_url }}');">
-    <div class="bg-black bg-opacity-40 w-full h-full flex items-center justify-center">
-      <h1 class="text-4xl md:text-5xl text-white font-bold drop-shadow-lg">{{ book.title }}</h1>
-    </div>
-  </section>
+<!-- Top Section: Comic Poster & Description -->
+<section class="max-w-7xl mx-auto mt-10 px-4 md:px-8 flex flex-col md:flex-row gap-8">
 
-  <!-- Overlapping Episode Box -->
-  <section class="relative z-10 max-w-4xl mx-auto -mt-16 px-4">
-    <div class="bg-white border border-red-200 rounded-2xl shadow-lg p-6">
-      <h2 class="text-2xl font-semibold text-red-600 mb-4">Episodes</h2>
-      <div class="space-y-4">
+  <!-- Left: Fixed-size Poster Container -->
+  <div class="w-full md:w-auto flex justify-center items-start">
+    <div class="w-[300px] h-[450px] bg-white rounded-2xl overflow-hidden shadow-lg border border-red-300 flex items-center justify-center">
+      {% if comic.image%}
+        <img src="{{ comic.image.url }}" alt="{{ book_name }}" 
+             class="max-w-full max-h-full object-contain object-center">
+      {% else %}
+        <div class="text-gray-600 text-xl font-bold">No Image</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Right: Comic Description -->
+  <div class="flex-1 flex flex-col justify-center space-y-4 bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+    <h1 class="text-3xl font-bold text-red-600">{{ book_name }}</h1>
+    <p class="text-gray-700">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.
+    </p>
+    <div class="text-sm text-gray-500 italic">Author: Unknown | Status: Ongoing</div>
+  </div>
+</section>
+
+
+
+  <!-- Bottom Section: Episode List -->
+  <section class="max-w-7xl mx-auto mt-16 px-4 md:px-8 pb-16">
+    <div class="bg-white rounded-3xl shadow-xl border border-red-200 p-6">
+      <h2 class="text-2xl font-bold text-red-600 mb-6">{{book_name}} - Episodes</h2>
+      <div class="space-y-5">
         {% for episode in episodes %}
-        <div class="flex justify-between items-center bg-red-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
-          <div class="text-lg font-medium text-gray-800">Episode {{ episode.number }}</div>
-          <div class="text-sm text-gray-600">{{ episode.release_date }}</div>
+        <div class="flex justify-between items-center bg-red-50 p-4 rounded-xl shadow-sm hover:shadow-md transition duration-300 border border-yellow-400/40">
+          <div>
+            <div class="text-lg font-semibold text-gray-800">{{ episode.EpisodeName }}</div>
+            <div class="text-sm text-gray-500 italic">{{ episode.release_date }}</div>
+          </div>
+          {% if episode.pdf %}
+          <a href="{{ episode.pdf.url }}" target="_blank"
+            class="border border-green-500 text-green-600 text-sm font-bold px-5 py-2 rounded-full hover:bg-green-100 transition duration-200">
+            Read
+          </a>
+          {% else %}
+          <span
+            class="border border-gray-300 text-gray-400 text-sm font-bold px-5 py-2 rounded-full cursor-not-allowed">
+            Not Available
+          </span>
+          {% endif %}
         </div>
         {% endfor %}
       </div>
     </div>
   </section>
-</main>
-
-
-  <!-- Footer -->
-  <footer class="bg-red-600 text-white py-6 mt-10">
-  <div class="text-center text-sm py-4 bg-red-700">
-    &copy; 2025 MangaMania. All rights reserved.
-  </div>
-  </footer>
-
 
 </body>
-
 </html>

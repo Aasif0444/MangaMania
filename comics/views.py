@@ -8,12 +8,14 @@ def home(request):
     genre_books = []
     
     for genre in genres:
-        books = genre.comicdetails_set.all()[:4]
+        books = genre.comicdetails_set.all()[:5]
         genre_books.append((genre, books))  # List of tuples
 
+    treding_books = ComicDetails.objects.all()[:5]
     context = {
         'genres_books': genre_books,
-        'active_page' :'home'
+        'active_page' :'home',
+        'trending_books':treding_books
     }
     return render(request, 'comics/home.html', context)
 
@@ -30,8 +32,13 @@ def about(response):
      return render(response,'comics/AboutPage.html',{})
 
 def book(response,name):
+    comic= ComicDetails.objects.get(cname = name)
+    episodes_list = comic.comidepisodes_set.all()
+
     config = {
-         'book_name':name
+         'comic':comic,
+         'book_name':name,
+         'episodes':episodes_list
     }
     return render(response,'comics/specificBook.html',config)
 

@@ -51,7 +51,7 @@
         <a href="{% url 'genrapage' %}" class="nav-link text-white hover:text-white">Genres</a>
         <a href="{% url 'aboutpage' %}" class="nav-link text-white hover:text-white">About</a>
       </div>
-      <a href="#" class="text-white border border-white px-4 py-2 rounded-lg font-medium hover:bg-white hover:text-red-600 transition duration-300">Login</a>
+      <a href="{% url 'loginPage' %}" class="text-white border border-white px-4 py-2 rounded-lg font-medium hover:bg-white hover:text-red-600 transition duration-300">Login</a>
     </div>
   </div>
 </nav>
@@ -84,7 +84,14 @@
             <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 18.657l-6.828-6.829a4 4 0 010-5.656z"/>
           </svg>
           <span>{{ book.totalLike }}</span>
-        </div>
+          </div>
+            <div class="mt-auto flex justify-end">
+              <a href="{% url 'bookpage' book.cname %}" 
+                class="bg-green-500 hover:bg-green-600 text-white font-medium py-1 px-3 rounded-lg transition">
+                Read
+              </a>
+            </div>
+        
       </div>
     </div>
     {% endfor %}
