@@ -48,9 +48,9 @@
 
   <!-- Right: Comic Description -->
   <div class="flex-1 flex flex-col justify-center space-y-4 bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-    <h1 class="text-3xl font-bold text-red-600">{{ book_name }}</h1>
+    <h1 class="text-3xl font-bold text-green-600">{{ book_name }}</h1>
     <p class="text-gray-700">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.
+      {{book_description}}
     </p>
     <div class="text-sm text-gray-500 italic">Author: Unknown | Status: Ongoing</div>
   </div>
@@ -60,11 +60,11 @@
 
   <!-- Bottom Section: Episode List -->
   <section class="max-w-7xl mx-auto mt-16 px-4 md:px-8 pb-16">
-    <div class="bg-white rounded-3xl shadow-xl border border-red-200 p-6">
-      <h2 class="text-2xl font-bold text-red-600 mb-6">{{book_name}} - Episodes</h2>
+    <div class="bg-white rounded-3xl shadow-xl border-2 border-green-200 p-6">
+      <h2 class="text-2xl font-bold text-green-600 mb-6">{{book_name}} - Episodes</h2>
       <div class="space-y-5">
         {% for episode in episodes %}
-        <div class="flex justify-between items-center bg-red-50 p-4 rounded-xl shadow-sm hover:shadow-md transition duration-300 border border-yellow-400/40">
+        <div class="flex justify-between items-center bg-green-50 p-4 rounded-xl shadow-sm hover:shadow-md transition duration-300 border border-yellow-400/40">
           <div>
             <div class="text-lg font-semibold text-gray-800">{{ episode.EpisodeName }}</div>
             <div class="text-sm text-gray-500 italic">{{ episode.release_date }}</div>

@@ -15,10 +15,9 @@ class ComicDetails(models.Model):
     totalLike = models.IntegerField()
     image = models.ImageField(upload_to='comics/',blank=True,null=True)
     poster_image = models.ImageField(upload_to='comics_poster/',blank=True,null=True)
-    
+    comic_description = models.CharField(max_length=500,null=True, blank=True)
 
     gname = models.ForeignKey(ComicGenre,on_delete=models.CASCADE)
-
 
     def __str__(self):
         return self.cname

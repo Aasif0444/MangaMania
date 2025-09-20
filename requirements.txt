@@ -2,3 +2,5 @@ Django==5.2.4
 django-widget-tweaks==1.5.0
 mysqlclient==2.2.4   # or PyMySQL if you chose that
 Pillow==10.4.0
+
+

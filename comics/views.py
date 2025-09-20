@@ -34,10 +34,10 @@ def about(response):
 def book(response,name):
     comic= ComicDetails.objects.get(cname = name)
     episodes_list = comic.comidepisodes_set.all()
-
     config = {
          'comic':comic,
          'book_name':name,
+         'book_description':comic.comic_description,
          'episodes':episodes_list
     }
     return render(response,'comics/specificBook.html',config)
